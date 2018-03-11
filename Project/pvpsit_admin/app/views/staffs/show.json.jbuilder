@@ -1,0 +1,1 @@
+json.extract! @staff, :id, :staffid, :name, :dob, :laddress, :lphone, :address, :pphone, :mobile, :email, :doj, :bid, :designation, :qualification, :priority, :nrpjc, :gender, :status, :path, :profile, :created_at, :updated_at

@@ -1,0 +1,55 @@
+<%- model_class = Staff -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:staffid) %>:</strong></dt>
+  <dd><%= @staff.staffid %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @staff.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:dob) %>:</strong></dt>
+  <dd><%= @staff.dob %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:laddress) %>:</strong></dt>
+  <dd><%= @staff.laddress %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:lphone) %>:</strong></dt>
+  <dd><%= @staff.lphone %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:address) %>:</strong></dt>
+  <dd><%= @staff.address %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:pphone) %>:</strong></dt>
+  <dd><%= @staff.pphone %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:mobile) %>:</strong></dt>
+  <dd><%= @staff.mobile %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+  <dd><%= @staff.email %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:doj) %>:</strong></dt>
+  <dd><%= @staff.doj %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:bid) %>:</strong></dt>
+  <dd><%= @staff.bid %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:designation) %>:</strong></dt>
+  <dd><%= @staff.designation %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:qualification) %>:</strong></dt>
+  <dd><%= @staff.qualification %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:priority) %>:</strong></dt>
+  <dd><%= @staff.priority %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:nrpjc) %>:</strong></dt>
+  <dd><%= @staff.nrpjc %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:gender) %>:</strong></dt>
+  <dd><%= @staff.gender %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
+  <dd><%= @staff.status %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:path) %>:</strong></dt>
+  <dd><%= @staff.path %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:profile) %>:</strong></dt>
+  <dd><%= @staff.profile %></dd>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              staffs_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_staff_path(@staff), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              staff_path(@staff),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

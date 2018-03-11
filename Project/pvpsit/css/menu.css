@@ -1,0 +1,195 @@
+/* General menu styling */
+nav
+{
+margin-top:-14px;
+font-size: 14px;
+}
+.nav {
+padding: 0;
+background-color: rgba(0,0,0,0.8);
+}
+/* The main navigation link containers */
+.nav>li {
+display: inline-block; /* Displaying them on the same line */
+margin: 0;
+padding: 0;
+}
+/* The main navigation links */
+.nav>li>a {
+/* Layout */
+display: block;
+position: relative;
+padding: 10px 10px;
+/* Text */
+color: #fff;
+text-decoration: none;
+/* Background */
+ /* For older browsers */
+ /* Transparent background for modern browsers */
+/* Making the color to change on hover with a transition */
+-webkit-transition: color .3s ease-in;
+-moz-transition: color .3s ease-in;
+-o-transition: color .3s ease-in;
+-ms-transition: color .3s ease-in;
+}
+/* Changing the color on hover */
+.nav>li>a:hover, .nav>li:hover>a {
+color: #0fd0f9;
+}
+/* The links which contain dropdowns menu are wider, because they have a little arrow */
+.nav>.dropdown>a {
+padding: 10px 30px 10px 20px;
+}
+/* The arrow indicating the dropdown */
+.dropdown>a:after {
+content: "";
+position: absolute;
+top: 14px;
+right: 10px;
+width: 7px;
+height: 7px;
+-webkit-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+-moz-transform: rotate(45deg);
+-o-transform: rotate(45deg);
+border-bottom: 1px solid #fff;
+border-right: 1px solid #fff;
+}
+/* Changing the color of the arrow on hover */	
+.dropdown>a:hover::after, .dropdown:hover>a::after {
+border-color: #0fd0f9;
+}
+/* The submenus */
+.nav ul {
+position: absolute;
+margin: 0;
+padding: 0;
+list-style: none;
+display: block;
+z-index: 9999;
+background:rgba(0,0,0,0.9);
+/*border-radius:0px 0px 5px 5px;*/
+font-size: 14px;
+text-align: left;
+}
+/* General layout settings for the link containers of the submenus */
+.nav ul li {
+position: absolute;
+top: -9999px; /* Hiding them */
+height: 0px;
+display: block;
+margin: 0;
+padding: 0;
+/* Making them to expand their height with a transition, for a slide effect */
+-webkit-transition: height .2s ease-in;
+-moz-transition: height .2s ease-in;
+-o-transition: height .2s ease-in;
+-ms-transition: height .2s ease-in;
+
+}
+/* Displays the submenu links, by expading their containers (with a transition, previously defined) and by repositioning them */
+.dropdown:hover>ul>li {
+height: 30px;
+position: relative;
+top: auto;
+}
+/* The submenu links */
+.nav ul li a {
+/* Layout */
+padding: 4px 20px;
+width: 300px;
+display: block;
+position: relative;
+/* Text */
+ color: #bbb;
+text-decoration: none;
+
+text-transform: capitalize;
+-webkit-transition: color .3s ease-in, background .3s ease-in;
+-moz-transition: color .3s ease-in, background .3s ease-in;
+-o-transition: color .3s ease-in, background .3s ease-in;
+-ms-transition: color .3s ease-in, background .3s ease-in;
+}
+/* Changing the link's color and background on hover */
+.nav ul li:hover>a, .nav ul li a:hover {
+color: #0fd0f9;
+background: rgba(0, 0, 0, .75);
+}
+/* Making the level 2 (or higher) submenus to appear at the right of their parent */
+.nav ul .dropdown:hover ul {
+left: 300px;
+top: 0px;
+}
+/* The submenu links have a different arrow which indicates another dropdown submenu */
+.nav ul .dropdown a::after {
+width: 6px;
+height: 6px;
+border-bottom: 0;
+border-right: 1px solid #fff;
+border-top: 1px solid #fff;
+top: 12px;
+}
+/* Changing the color of the arrow on hover */
+.nav ul .dropdown:hover>a::after, .nav ul .dropdown>a:hover::after {
+border-right: 1px solid #0fd0f9;
+border-top: 1px solid #0fd0f9;
+}
+
+/*Department Navigation*/
+
+/*VERTICAL MENU*/
+.vertical_nav{
+  position:relative;
+  width:203px;
+  margin-top: -15px;
+  margin-right: 40px;
+}
+
+/* ALL UL */
+.vertical_nav  ul{
+  list-style: none;
+  padding: 0px;
+}
+/* ALL LI */
+.vertical_nav  li{
+  position:relative;
+}
+/* ALL A */
+.vertical_nav  a{
+  display:block;
+  color:#eee;
+  text-decoration:none;
+  padding:5px;
+  background:rgba(0,0,0,0.8);
+  font-size: 14px;
+  transition:0.5s;
+}
+/* ALL A HOVER */
+.vertical_nav  li:hover > a{
+  background:rgba(0,0,0,0.9);
+  color: #0fd0f9;
+}
+
+/* INNER UL HIDE */
+.vertical_nav ul ul{
+  position:absolute;
+  left:0%;
+  top:0;
+  width:100%;
+  visibility:hidden;
+  opacity:0;
+  transition: transform 0.2s;
+  transform: translateX(40px);
+}
+/* INNER UL SHOW */
+.vertical_nav  li:hover > ul{
+  left:100%;
+  visibility:visible;
+  z-index: 9999;
+  opacity:1;
+  transform: translateX(0px);
+  transform: translateY(-12px);
+}
+
+
+

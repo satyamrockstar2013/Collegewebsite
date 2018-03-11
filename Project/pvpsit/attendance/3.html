@@ -1,0 +1,16 @@
+<form action="#">
+    <p><label><input type="checkbox" id="checkAll"/> Check all</label></p>
+    
+    <fieldset>
+        <legend>Loads of checkboxes</legend>
+        <p><label><input type="checkbox" checked> Option 1</label></p>
+        <p><label><input type="checkbox" /> Option 2</label></p>
+        <p><label><input type="checkbox" /> Option 3</label></p>
+        <p><label><input type="checkbox" /> Option 4</label></p>
+    </fieldset>
+</form>
+<script>
+$("#checkAll").change(function () {
+    $("input:checkbox").prop('checked', $(this).prop("checked"));
+});
+</script>

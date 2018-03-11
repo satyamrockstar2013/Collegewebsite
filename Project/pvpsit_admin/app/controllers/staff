@@ -1,0 +1,2 @@
+
+  rails g scaffold Staff staffid:string name:string dob:date laddress:text lphone:string address:text pphone:string mobile:string email:string doj:date bid:string designation:integer qualification:text priority:integer nrpjc:text gender:string status:string path:string profile:string

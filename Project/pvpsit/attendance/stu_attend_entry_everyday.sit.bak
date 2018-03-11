@@ -1,0 +1,1224 @@
+<?php
+	class stu_attend_entry_everyday
+	{
+		function stu_attend_entry_everyday($params,$smarty)
+		{
+			if(session_is_registered('username'))
+			{
+				include('db_connect.sit');
+				$flag=0;
+				$ac_year=date("Y");
+				if(isset($_POST['submit']))
+				{
+					$userid=$_SESSION['username'];
+					$rybssid=$params['subject'];
+					$period=$params['period'];
+					$_SESSION['rybssid']=$rybssid;
+					$length=strlen($rybssid);
+					$today="".$params['daya']."-".$params['montha']."-".$params['yeara'];
+					
+					$_SESSION['daya']=$params['daya'];
+					$_SESSION['montha']=$params['montha'];
+					$_SESSION['yeara']=$params['yeara'];
+					$_SESSION['period']=$params['period'];
+					
+					if ($length == 8)
+					{
+						$ybid=substr($rybssid,2,4);
+						$rybsid=substr($rybssid,0,6);
+						$rybid=substr($rybssid,0,5);
+						$ybsid=substr($rybssid,2,4);
+						$rid=substr($rybssid,0,2);
+						$bid=substr($rybssid,3,2);
+						$rybid=substr($rybssid,0,5);
+						$sid=substr($rybssid,5,1);
+						$no=substr($rybssid,6,2);
+						$y=substr($rybssid,2,1);
+						
+					}
+					else
+					{
+						$ybid=substr($rybssid,1,3);
+						$rybsid=substr($rybssid,0,5);
+						$rybid=substr($rybssid,0,4);
+						$ybsid=substr($rybssid,1,4);
+						$rid=substr($rybssid,0,1);
+						$bid=substr($rybssid,2,2);
+						$rybid=substr($rybssid,0,4);
+						$sid=substr($rybssid,4,1);
+						$no=substr($rybssid,5,2);
+						$y=substr($rybssid,1,1);
+					}
+					//echo "bid".$bid;
+					$smarty->assign('y',$y);
+					$sql="set datestyle to 'European, SQL'";
+					$res=$con->execute($sql) or die("unable datestyle");
+					$hour="hour0".$period;
+					$t=$today;
+					$t=date("D",strtotime($t));
+					$sql="select $hour from stu_timetables where rybsid='$rybsid' and  day='$t'";
+					$time=$con->execute($sql) or die($con->ErrorMsg());
+					$sql="select $hour from stu_attschedule where rybsid='$rybsid' and  date='$today' ";
+					$hou=$con->execute($sql) or die($con->ErrorMsg());
+					$sql="select type from subject_att  where rybid='$rybid' and  no='$no'";
+					$type=$con->execute($sql) or die($con->ErrorMsg());
+					$type =$type->fields[0]; 
+					//echo $type;
+					$p="0".$period;
+					$sql="select sub_no,hour_no from staff_adjustments where rybsid='$rybsid' and  date='$today' and sub_no='$no' and hour_no='$p'";
+					//echo $sql."<br>";
+					$adj=$con->execute($sql) or die($con->ErrorMsg());
+					$adj_hour=$adj->fields[1];
+					$adj_subno=$adj->fields[0];
+					//echo"adjhour". $adj_hour."adjsub".$adj_subno;
+					//echo "period".$period;
+					//echo "hour". $hou->fields[0];
+			
+
+			/*if($type != 'p')
+			{
+				if($hou->fields[0]!='')
+				{
+						//echo "hou".$hou->fields[0];
+						$smarty->assign('msg','Attendance for this  Hour is already entered');
+						$staffid=$_SESSION['username'];
+						$sql10="select rybssid from staff_subjects where staffid='$staffid' order by rybssid";
+						$res10=$con->execute($sql10) or die($con->ErrorMsg());
+						$count=$res10->RecordCount();
+						$smarty->assign('count',$count);
+						$i=0;
+						while(!$res10->EOF)
+						{
+							$rybssid=$res10->fields[0];
+							//echo $rybssid;
+							$len=strlen($rybssid);
+							//echo "length".$len;
+							if($len == 8)
+							{
+								$rybsid=substr($rybssid,0,6);
+								$rid=substr($rybssid,0,2);
+								$bid=substr($rybssid,3,2);
+								$rybid=substr($rybssid,0,5);
+								$sid=substr($rybssid,5,1);
+								$no=substr($rybssid,6,2);
+								$y=substr($rybssid,2,1);
+							}
+							else
+							{
+								$rybsid=substr($rybssid,0,5);
+								$rid=substr($rybssid,0,1);
+								$bid=substr($rybssid,2,2);
+								$rybid=substr($rybssid,0,4);
+								$sid=substr($rybssid,4,1);
+								$no=substr($rybssid,5,2);
+								$y=substr($rybssid,1,1);
+							}
+							$sql="$"."sql".$i;
+							$res="$"."res".$i;
+							$sql="select shortcut from subject_att where rybid='$rybid' and no='$no'";
+							$res=$con->execute($sql) or die($con->ErrorMsg());
+							$subject2[$i]=$res->fields[0];
+							$smarty->assign('subject',$subject2);
+							//echo "hello";
+							//echo $rid;
+							if($bid !='00' && $bid !='E0' )
+							{
+							
+								if($rid != 13)
+								{
+									if($y==1)
+									{
+										$year[$i]='First Year';
+									}
+									if($y==2)
+									{
+										$year[$i]='Two One';
+									}
+									if($y==3)
+									{
+										$year[$i]='Two Two';
+									}
+									if($y==4)
+									{
+										$year[$i]='Three One';
+									}
+									if($y==5)
+									{
+										$year[$i]='Three Two';
+									}
+									if($y==6)
+									{
+										$year[$i]='Four One';
+									}
+									if($y==7)
+									{
+										$year[$i]='Four Two';
+									}
+								}
+								 if($rid == 13)
+								{
+								
+									if($y==1)
+									{
+										$year[$i]='One One';
+									}
+									if($y==2)
+									{
+										$year[$i]='One Two';
+									}
+									if($y==3)
+									{
+										$year[$i]='Two One';
+									}
+									if($y==4)
+									{
+										$year[$i]='Two Two';
+									}
+									if($y==5)
+									{
+										$year[$i]='Three One';
+									}
+									if($y==6)
+									{
+										$year[$i]='Three Two';
+									}
+									if($y==7)
+									{
+										$year[$i]='Four One';
+									}
+									if($y==8)
+									{
+										$year[$i]='Four Two';
+									}
+								}
+							}
+							
+							else if($bid=='00')
+							{
+								if($y==1)
+								{
+									$year[$i]='One One';
+								}
+								if($y==2)
+								{
+									$year[$i]='One Two';
+								}
+								if($y==3)
+								{
+									$year[$i]='Two Three';
+								}
+								if($y==4)
+								{
+									$year[$i]='Two Four';
+								}
+								if($y==5)
+								{
+									$year[$i]='Three Five';
+								}
+								if($y==6)
+								{
+									$year[$i]='Three Six';
+								}
+							}
+							else if($bid=='E0')
+							{
+								if($y==1)
+								{
+									$year[$i]='First Sem';
+								}
+								if($y==2)
+								{
+									$year[$i]='Second Sem';
+								}
+								if($y==3)
+								{
+									$year[$i]='Third Sem';
+								}
+								if($y==4)
+								{
+									$year[$i]='Fourth Sem';
+								}
+								if($y==5)
+								{
+									$year[$i]='Fifth Sem';
+								}
+								if($y==6)
+								{
+									$year[$i]='Sixth Sem';
+								}
+								
+								
+							}
+
+							$smarty->assign('year',$year);
+							$sec[$i]=$sid;
+							$sql="select bshort from branchmap where bid='$bid'";
+							$res=$con->execute($sql) or die($con->ErrorMsg());
+							$branch[$i]=$res->fields[0];
+							$smarty->assign('branch',$branch);
+							$smarty->assign('sec',$sec);
+							$value[$i]=$rybssid;
+							$smarty->assign('value',$value);
+							$i++;
+							$res10->MoveNext();
+						}
+						$smarty->assign('values',array(0,1,2,3,4,5,6,7,8,9,10,11,12));
+						$smarty->assign('names',array('Month','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'));
+						$smarty->display('stu_attend_entry_everyday.tpl');
+					}
+			}*/
+					 if($hou->fields[0]!=''  and  $type !='p')
+					{
+						
+							//echo "hou".$hou->fields[0];
+						$smarty->assign('msg','Attendance for this  Hour is already entered');
+						$staffid=$_SESSION['username'];
+						$sql10="select rybssid from staff_subjects where staffid='$staffid' order by rybssid";
+						$res10=$con->execute($sql10) or die($con->ErrorMsg());
+						$count=$res10->RecordCount();
+						$smarty->assign('count',$count);
+						$i=0;
+						while(!$res10->EOF)
+						{
+							$rybssid=$res10->fields[0];
+							//echo $rybssid;
+							$len=strlen($rybssid);
+							//echo "length".$len;
+							if($len == 8)
+							{
+								$rybsid=substr($rybssid,0,6);
+								$rid=substr($rybssid,0,2);
+								$bid=substr($rybssid,3,2);
+								$rybid=substr($rybssid,0,5);
+								$sid=substr($rybssid,5,1);
+								$no=substr($rybssid,6,2);
+								$y=substr($rybssid,2,1);
+							}
+							else
+							{
+								$rybsid=substr($rybssid,0,5);
+								$rid=substr($rybssid,0,1);
+								$bid=substr($rybssid,2,2);
+								$rybid=substr($rybssid,0,4);
+								$sid=substr($rybssid,4,1);
+								$no=substr($rybssid,5,2);
+								$y=substr($rybssid,1,1);
+							}
+							$sql="$"."sql".$i;
+							$res="$"."res".$i;
+							$sql="select shortcut from subject_att where rybid='$rybid' and no='$no'";
+							$res=$con->execute($sql) or die($con->ErrorMsg());
+							$subject2[$i]=$res->fields[0];
+							$smarty->assign('subject',$subject2);
+							//echo "hello";
+							//echo $rid;
+							if($bid !='00' && $bid !='E0' )
+							{
+							
+								if($rid != 13)
+								{
+									if($y==1)
+									{
+										$year[$i]='First Year';
+									}
+									if($y==2)
+									{
+										$year[$i]='Two One';
+									}
+									if($y==3)
+									{
+										$year[$i]='Two Two';
+									}
+									if($y==4)
+									{
+										$year[$i]='Three One';
+									}
+									if($y==5)
+									{
+										$year[$i]='Three Two';
+									}
+									if($y==6)
+									{
+										$year[$i]='Four One';
+									}
+									if($y==7)
+									{
+										$year[$i]='Four Two';
+									}
+								}
+								 if($rid == 13)
+								{
+								
+									if($y==1)
+									{
+										$year[$i]='One One';
+									}
+									if($y==2)
+									{
+										$year[$i]='One Two';
+									}
+									if($y==3)
+									{
+										$year[$i]='Two One';
+									}
+									if($y==4)
+									{
+										$year[$i]='Two Two';
+									}
+									if($y==5)
+									{
+										$year[$i]='Three One';
+									}
+									if($y==6)
+									{
+										$year[$i]='Three Two';
+									}
+									if($y==7)
+									{
+										$year[$i]='Four One';
+									}
+									if($y==8)
+									{
+										$year[$i]='Four Two';
+									}
+								}
+							}
+							
+							
+							
+							else if($bid=='00')
+							{
+								if($y==1)
+								{
+									$year[$i]='One One';
+								}
+								if($y==2)
+								{
+									$year[$i]='One Two';
+								}
+								if($y==3)
+								{
+									$year[$i]='Two Three';
+								}
+								if($y==4)
+								{
+									$year[$i]='Two Four';
+								}
+								if($y==5)
+								{
+									$year[$i]='Three Five';
+								}
+								if($y==6)
+								{
+									$year[$i]='Three Six';
+								}
+							}
+							else if($bid=='E0')
+							{
+								if($y==1)
+								{
+									$year[$i]='First Sem';
+								}
+								if($y==2)
+								{
+									$year[$i]='Second Sem';
+								}
+								if($y==3)
+								{
+									$year[$i]='Third Sem';
+								}
+								if($y==4)
+								{
+									$year[$i]='Fourth Sem';
+								}
+								if($y==5)
+								{
+									$year[$i]='Fifth Sem';
+								}
+								if($y==6)
+								{
+									$year[$i]='Sixth Sem';
+								}
+								
+								
+							}
+
+							$smarty->assign('year',$year);
+							$sec[$i]=$sid;
+							$sql="select bshort from branchmap where bid='$bid'";
+							$res=$con->execute($sql) or die($con->ErrorMsg());
+							$branch[$i]=$res->fields[0];
+							$smarty->assign('branch',$branch);
+							$smarty->assign('sec',$sec);
+							$value[$i]=$rybssid;
+							$smarty->assign('value',$value);
+							$i++;
+							$res10->MoveNext();
+						}
+						$smarty->assign('values',array(0,1,2,3,4,5,6,7,8,9,10,11,12));
+						$smarty->assign('names',array('Month','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'));
+						$smarty->display('stu_attend_entry_everyday.tpl');
+					}
+
+					
+					else
+					{
+						
+						$smarty->assign('section',$sid);
+						
+						//$sql="select stid,sname from stu_master where stu_master.stid=stu_status.stid and  stu_status.ybsid='$ybsid' and stu_status.rid=$rid and stu_status.status='A' order by  stu_status.priority,stu_status.stid";
+						//$sql="select m.stid,m.sname from stu_master m, stu_status s where m.stid=s.stid and  s.ybsid='$ybsid' and  s.status='A'  order by s.priority,s.stid";
+						//echo $sql;
+					//	$res=$con->execute($sql) or die($con->ErrorMsg());
+						//$smarty->assign('count',$res->RecordCount());
+						//'$smarty->assign('student',$res);
+						
+						$length=strlen($rybssid);
+						if ($length == 8)
+						{
+							$ybid=substr($rybssid,2,4);
+							$rybsid=substr($rybssid,0,6);
+							$ybsid=substr($rybssid,2,4);
+							$rid=substr($rybssid,0,2);
+							$bid=substr($rybssid,3,2);
+							$rybid=substr($rybssid,0,5);
+							$sid=substr($rybssid,5,1);
+							$no=substr($rybssid,6,2);
+							$y=substr($rybssid,2,1);
+						}
+						else
+						{
+							$ybid=substr($rybssid,1,3);
+							$rybsid=substr($rybssid,0,5);
+							$ybsid=substr($rybssid,1,4);
+							$rid=substr($rybssid,0,1);
+							$bid=substr($rybssid,2,2);
+							$rybid=substr($rybssid,0,4);
+							$sid=substr($rybssid,4,1);
+							$no=substr($rybssid,5,2);
+							$y=substr($rybssid,1,1);
+						}
+						
+						
+						
+						$sql="select bshort from branchmap where bid='$bid'";
+						$res=$con->execute($sql) or die($con->ErrorMsg());
+						$smarty->assign('branch',$res->fields[0]);
+						$sql10="select subname,shortcut,type from subject_att where rybid='$rybid' and no='$no'";
+						$res10=$con->execute($sql10) or die($con->ErrorMsg()); 
+						$smarty->assign('sub',$res10->fields[1]);
+						$smarty->assign('subname',$res10->fields[0]);
+						$sql5="select type from subject_att where rybid='$rybid' and no='$no'";
+						$res5=$con->execute($sql5) or die($con->ErrorMsg()); 
+						$_SESSION['type']=$res5->fields[0];
+						$type=$res5->fields[0];
+						$smarty->assign('type',$type);
+						$smarty->assign('rid',$rid);
+						$sql6="select subid,shortcut from subject_att where rybid='$rybid' and no='$no'";
+						//echo $sql6;
+						$res6=$con->execute($sql6) or die($con->ErrorMsg()); 
+						$subid=($res6->fields[0]);
+						$shortcut=strtoupper($res6->fields[1]);
+						//echo $shortcut;
+						if($res5->fields[0]=='t'  || $res5->fields[0]=='e')
+						{
+							$sql="select m.stid,m.sname from stu_master m, stu_status s where m.stid=s.stid and  s.ybsid='$ybsid' and  s.status='A'  order by s.priority,s.stid";
+							//ho $sql;
+							$res=$con->execute($sql) or die($con->ErrorMsg());
+							$smarty->assign('count',$res->RecordCount());
+							$smarty->assign('student',$res);
+						}
+						else if($res5->fields[0]=='p')
+						{
+							//echo "hi";
+							$sql7="select max(batch) from stu_labbatch where subid='$subid'";
+							//echo $sql7."<br>";
+							$batch_no=$con->execute($sql7) or die($con->ErrorMsg());
+							$batch_no=$batch_no->fields[0];
+							//echo"BATCH".$batch_no;
+							if($batch_no == 1)
+							{
+								
+								$sql="select m.stid,m.sname from stu_master m, stu_status s where m.stid=s.stid and  s.ybsid='$ybsid' and  s.status='A'  order by s.priority,s.stid";
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$smarty->assign('count',$res->RecordCount());
+								$smarty->assign('student',$res);
+							}
+							if($batch_no == 2)
+							{
+							
+								//echo "hi1****";
+								$day=date("D");
+								//echo "day".$day."<BR>";
+								//echo "SHORT".$shortcut."<BR>";
+								//$a=($shortcut);
+								//echo $a;
+								$day=strtoupper($day);
+								$sql="select day,batch,shortcut from stu_timetables_lab where ybsid='$ybsid' and shortcut='$shortcut' and day='$day'";
+								//echo $sql."<br>";
+								$labtimetables=$con->execute($sql) or die($con->ErrorMsg());
+								
+								$day=$labtimetables->fields[0];
+								//echo "ybbsid".$ybbsid."<br>";
+								//echo "day".$day."****<br>";
+								
+								$batch=$labtimetables->fields[1];
+								//echo "batch".$batch."****<br>";
+								
+								
+								//$batch=substr($ybbsid,3,1);
+								//echo "batch".$batch."<br>";
+								$shortcut=$labtimetables->fields[2];
+								//$sql6="select subid,shortcut from subject_att where shortcut='$shortcut'";
+								//echo $sql6."<br>";
+								//$res6=$con->execute($sql6) or die($con->ErrorMsg()); 
+								$subid=$res6->fields[0];
+								$sql="select s.stid from  stu_status s, stu_labbatch l where s.stid=l.stid and  s.ybsid='$ybsid' and  s.status='A' and l.batch=$batch  and l.subid='$subid' and s.rid=$rid order by s.priority,s.stid";
+								//echo $sql;
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$smarty->assign('count',$res->RecordCount());
+								$smarty->assign('student',$res);
+								
+								
+								
+								//$sql7="select l.batch  from stu_labbatch l, stu_status s where l.stid=s.stid and  l.ybid='$ybid' and l.subid='$subid' and ac_year=$ac_year order by  s.priority,s.stid";
+								//$res7=$con->execute($sql7) or die($con->ErrorMsg());
+								//$smarty->assign('batch',$res7);
+							}
+							
+						}
+					
+						
+						
+						$smarty->assign('today',$today);  
+					   	$smarty->display('stu_attend_entry_everyday1.tpl');
+					}
+				
+				}
+		 
+				
+				
+	else  if(isset($_POST["submit1"]))
+	{
+		$daya=$_SESSION['daya'];
+		$montha=$_SESSION['montha'];
+		$yeara=$_SESSION['yeara'];
+		$sql="set datestyle to 'European, SQL'";
+		$res=$con->execute($sql) or die("unable datestyle");
+		$today=$daya."-".$montha."-".$yeara;
+		$t=$today;
+		//echo "day".$t;
+		$t=date("D",strtotime($t));
+		//echo $today."day".$t;
+		//$ac_year=date("Y");
+		//if(date("n")<=6)
+		//$ac_year-=1;
+		//echo $ac_year;
+		$rybssid=$_SESSION['rybssid'];
+		$period=$_SESSION['period'];
+		//echo "period".$period;
+		$length=strlen($rybssid);
+		if ($length == 8)
+		{
+			$rybsid=substr($rybssid,0,6);
+			$rybid=substr($rybssid,0,5);
+			$rid=substr($rybssid,0,2);
+			$no=substr($rybssid,6,2);
+		}
+		else
+		{
+			$rybsid=substr($rybssid,0,5);
+			$rybid=substr($rybssid,0,4);
+			$rid=substr($rybssid,0,1);
+			$no=substr($rybssid,5,2);
+		}
+		//echo "rybsid".$rybsid;
+		$subject="sub".$no;
+		$sql="select * from subject_att  where rybid='$rybid' and no='$no'";
+		$sub=$con->execute($sql) or die($con->ErrorMsg());
+		$shortcut=$sub->fields[3]; 
+		$hour="hour0".$period;
+		$sql="select $subject from stu_dailyattendance where rybsid='$rybsid' and date='$today'";
+		$res=$con->execute($sql) or die($con->ErrorMsg());
+		$hour="hour0".$period;
+		if($res->fields[0]=='')
+		{
+			//checking whether there is an entry 
+			$sql1="select COUNT(*) from stu_dailyattendance where stid='Ideal' and rybsid='$rybsid' and date='$today'";
+			$res1=$con->execute($sql1) or die($con->ErrorMsg());
+			//if there are no entries for final attendance insert else update
+			if($res1->fields[0]==0)
+			{
+				$subject="sub".$no;
+				if($_SESSION[type]=='t' || $_SESSION[type]=='e')
+				{
+					$stid1="Ideal";
+					//$attend1=$params[classes];
+					$attend1=1;
+					$sql1="insert into stu_dailyattendance(stid,rybsid,".$subject.",date) values ('$stid1','$rybsid',$attend1,'$today')";
+					$res1=$con->execute($sql1) or die($con->ErrorMsg());
+					$sql2="insert into stu_attschedule(rybsid,date,".$hour.") values ('$rybsid','$today','$shortcut')";
+					$schedule=$con->execute($sql2) or die($con->ErrorMsg());
+				}
+				else
+				{
+					
+					$day=date("D");
+					$sql="select ybsid from stu_timetables_lab  where shortcut='$shortcut' and day='$day'";
+					$labtimetables=$con->execute($sql) or die($con->ErrorMsg());
+					$ybbsid=$labtimetables->fields[1];
+					$batch=substr($ybbsid,3,1);
+					$stid1="Ideal";
+					$stid2="Ideal1";
+					$attend1=$params[classes];
+					$sql11="insert into stu_dailyattendance(stid,rybsid,".$subject.",date) values  ('$stid1','$rybsid',$attend1,'$today')";
+					$res11=$con->execute($sql11) or die($con->ErrorMsg());
+					if($batch == 2)
+					{
+						$sql11="insert into stu_dailyattendance(stid,rybsid,".$subject.",date) values  ('$stid2','$rybsid',$attend1,'$today')";
+						$res11=$con->execute($sql11) or die($con->ErrorMsg());
+					}
+					
+					$sql2="insert into stu_attschedule(rybsid,date,".$hour.") values ('$rybsid','$today','$shortcut')";
+					$schedule=$con->execute($sql2) or die($con->ErrorMsg());
+				}
+			}
+			else
+			{
+				//echo "update";
+				$subject="sub".$no;
+				$sql4="select max($subject) from stu_dailyattendance where stid='Ideal' and rybsid='$rybsid' and date='$today'";
+				$rcount=$con->execute($sql4) or die($con->ErrorMsg());
+				if($_SESSION['type']=='t' || $_SESSION[type]=='e')
+				{
+					$stid='Ideal';
+					//$stid2="Ideal1";
+					$rcount=$rcount->fields[0];
+					//echo "rcount".$rcount;
+					$attend=$rcount+1;
+					$sql2="update stu_dailyattendance set $subject=$attend where stid='$stid' and rybsid='$rybsid' and date='$today'";
+					$res2=$con->execute($sql2) or die($con->ErrorMsg());
+					$sql3="update stu_attschedule set $hour='$shortcut' where rybsid='$rybsid' and date='$today' ";
+					$schedule=$con->execute($sql3) or die($con->ErrorMsg());
+				}
+				else
+				{
+					
+					$stid1='Ideal';
+					$stid2='Ideal1';
+					$attend1=$params[classes];
+					//$attend1=3;
+					//$attend2=$params[classes];;
+					$day=date("D");
+					$sql="select ybsid from stu_timetables_lab  where shortcut='$shortcut' and day='$day'";
+					$labtimetables=$con->execute($sql) or die($con->ErrorMsg());
+					$ybbsid=$labtimetables->fields[1];
+					$batch=substr($ybbsid,3,1);
+					
+					$sql2="update stu_dailyattendance  set $subject=$attend1 where stid='$stid1' and rybsid='$rybsid' and date='$today'";
+					$res2=$con->execute($sql2) or die($con->ErrorMsg());
+					
+					if($batch == 2)
+					{
+						$sql2="update stu_dailyattendance  set $subject=$attend1 where stid='$stid2' and rybsid='$rybsid' and date='$today'";
+						$res2=$con->execute($sql2) or die($con->ErrorMsg());
+					}
+					
+					$sql3="update stu_attschedule set $hour='$shortcut' where rybsid='$rybsid' and date='$today' ";
+					$schedule=$con->execute($sql3) or die($con->ErrorMsg());
+					
+				}
+				
+			}	
+				
+			for($i=0;$i<$params[k];$i++)
+			{
+					$sql4="select COUNT(*) from stu_dailyattendance where stid='".$params[stid.$i]."' and rybsid='$rybsid' and date='$today'";
+					$res4=$con->execute($sql4) or die($con->ErrorMsg());
+					if($res4->fields[0]==0)
+					{
+						$subject="sub".$no;
+					        $stid=$params[stid.$i];
+						//echo $stid."<br>";
+						//$stid=$stu->fields[0];
+						//$attend=$params[attend.$i];
+						 $check=$stid."c";
+						if(isset($params[$check]))
+						{
+							if($_SESSION['type']=='t' || $_SESSION['type']=='e')
+								$attend=1;
+							else if($_SESSION['type']=='p')
+							{
+								$attend=$params[classes];
+							}
+						}
+						else
+						{
+							$attend=0;
+						}
+						$sql5="insert into stu_dailyattendance(stid,rybsid,".$subject.",date) values ('$stid','$rybsid',$attend,'$today')";
+						$res5=$con->execute($sql5) or die($con->ErrorMsg());
+					}
+					else
+					{
+						//echo "hiiiii3";
+						$subject="sub".$no;
+						$stid=$params[stid.$i];
+						//$attend=$params[attend.$i];
+						$check=$stid."c";
+						if(isset($params[$check]))
+						{
+							if($_SESSION['type']=='t' || $_SESSION['type']=='e')
+								$attend=1;
+							else if($_SESSION['type']=='p')
+								$attend=$params[classes];
+						}
+						else
+							$attend=0;
+						$sql6="update stu_dailyattendance set $subject=$attend where stid='$stid' and rybsid='$rybsid'  and date='$today'";
+						$res6=$con->execute($sql6) or die($con->ErrorMsg());
+					}
+					//entering monthly attendance
+			}      
+			$smarty->assign('msg',"Attendance Updated Successfully");
+			
+		}
+		else
+		{
+		
+			//echo "else part<br>";
+			$subject="sub".$no;
+			
+			$sql4="select max($subject) from stu_dailyattendance where stid='Ideal' and rybsid='$rybsid' and date='$today'";
+			echo $sql4;
+			echo "<br>";
+			$rcount=$con->execute($sql4) or die($con->ErrorMsg());
+			if($_SESSION['type']=='t' || $_SESSION[type]=='e')
+			{
+				$stid='Ideal';
+				$attend=$params[classes];
+				$rcount=$rcount->fields[0];
+				//echo "rcount".$rcount;
+				$attend=$rcount+1;
+				
+				//echo "hiattend".$attend;
+				
+				$sql2="update stu_dailyattendance set $subject=$attend where stid='$stid' and rybsid='$rybsid' and date='$today'";
+				$res2=$con->execute($sql2) or die($con->ErrorMsg());
+				$sql3="update stu_attschedule set $hour='$shortcut' where rybsid='$rybsid' and date='$today' ";
+				$schedule=$con->execute($sql3) or die($con->ErrorMsg());
+			}
+			for($i=0;$i<$params[k];$i++)
+			{
+				$subject="sub".$no;
+				$sql4="select $subject from stu_dailyattendance where stid='".$params[stid.$i]."' and rybsid='$rybsid' and date='$today'";
+				$res4=$con->execute($sql4) or die($con->ErrorMsg());
+				$stid=$params[stid.$i];
+				$rcount=$res4->fields[0];
+				//echo "rcount".$rcount;
+				//$attend=$params[attend.$i];
+				$check=$stid."c";
+				if(isset($params[$check]))
+					$attend=$rcount+1;
+				else
+					$attend=$rcount;
+				
+			        $sql6="update stu_dailyattendance set $subject=$attend where stid='$stid' and rybsid='$rybsid'  and date='$today'";
+				//echo "hi".$sql6;
+				$res6=$con->execute($sql6) or die($con->ErrorMsg());
+				//entering monthly attendance
+			}      
+			$smarty->assign('msg', "Attendance Updated Successfully");
+		}
+		$staffid=$_SESSION['username'];
+		$sql10="select rybssid from staff_subjects where staffid='$staffid' order by rybssid";
+		$res10=$con->execute($sql10) or die($con->ErrorMsg());
+		$count=$res10->RecordCount();
+		$smarty->assign('count',$count);
+		$i=0;
+						while(!$res10->EOF)
+						{
+							$rybssid=$res10->fields[0];
+							//echo $rybssid;
+							$len=strlen($rybssid);
+							//echo "length".$len;
+							if($len == 8)
+							{
+								$rybsid=substr($rybssid,0,6);
+								$rid=substr($rybssid,0,2);
+								$bid=substr($rybssid,3,2);
+								$rybid=substr($rybssid,0,5);
+								$sid=substr($rybssid,5,1);
+								$no=substr($rybssid,6,2);
+								$y=substr($rybssid,2,1);
+							}
+							else
+							{
+								$rybsid=substr($rybssid,0,5);
+								$rid=substr($rybssid,0,1);
+								$bid=substr($rybssid,2,2);
+								$rybid=substr($rybssid,0,4);
+								$sid=substr($rybssid,4,1);
+								$no=substr($rybssid,5,2);
+								$y=substr($rybssid,1,1);
+							}
+							$sql="$"."sql".$i;
+							$res="$"."res".$i;
+							$sql="select shortcut from subject_att where rybid='$rybid' and no='$no'";
+							$res=$con->execute($sql) or die($con->ErrorMsg());
+							$subject2[$i]=$res->fields[0];
+							$smarty->assign('subject',$subject2);
+							//echo "hello";
+							//echo $rid;
+							if($bid !='00' && $bid !='E0' )
+							{
+							
+								if($rid != 13)
+								{
+									if($y==1)
+									{
+										$year[$i]='First Year';
+									}
+									if($y==2)
+									{
+										$year[$i]='Two One';
+									}
+									if($y==3)
+									{
+										$year[$i]='Two Two';
+									}
+									if($y==4)
+									{
+										$year[$i]='Three One';
+									}
+									if($y==5)
+									{
+										$year[$i]='Three Two';
+									}
+									if($y==6)
+									{
+										$year[$i]='Four One';
+									}
+									if($y==7)
+									{
+										$year[$i]='Four Two';
+									}
+								}
+								 if($rid == 13)
+								{
+								
+									if($y==1)
+									{
+										$year[$i]='One One';
+									}
+									if($y==2)
+									{
+										$year[$i]='One Two';
+									}
+									if($y==3)
+									{
+										$year[$i]='Two One';
+									}
+									if($y==4)
+									{
+										$year[$i]='Two Two';
+									}
+									if($y==5)
+									{
+										$year[$i]='Three One';
+									}
+									if($y==6)
+									{
+										$year[$i]='Three Two';
+									}
+									if($y==7)
+									{
+										$year[$i]='Four One';
+									}
+									if($y==8)
+									{
+										$year[$i]='Four Two';
+									}
+								}
+							}
+							
+							
+							
+							else if($bid=='00')
+							{
+								if($y==1)
+								{
+									$year[$i]='One One';
+								}
+								if($y==2)
+								{
+									$year[$i]='One Two';
+								}
+								if($y==3)
+								{
+									$year[$i]='Two Three';
+								}
+								if($y==4)
+								{
+									$year[$i]='Two Four';
+								}
+								if($y==5)
+								{
+									$year[$i]='Three Five';
+								}
+								if($y==6)
+								{
+									$year[$i]='Three Six';
+								}
+							}
+							else if($bid=='E0')
+							{
+								if($y==1)
+								{
+									$year[$i]='First Sem';
+								}
+								if($y==2)
+								{
+									$year[$i]='Second Sem';
+								}
+								if($y==3)
+								{
+									$year[$i]='Third Sem';
+								}
+								if($y==4)
+								{
+									$year[$i]='Fourth Sem';
+								}
+								if($y==5)
+								{
+									$year[$i]='Fifth Sem';
+								}
+								if($y==6)
+								{
+									$year[$i]='Sixth Sem';
+								}
+								
+								
+							}
+
+							$smarty->assign('year',$year);
+							$sec[$i]=$sid;
+							$sql="select bshort from branchmap where bid='$bid'";
+							$res=$con->execute($sql) or die($con->ErrorMsg());
+							$branch[$i]=$res->fields[0];
+							$smarty->assign('branch',$branch);
+							$smarty->assign('sec',$sec);
+							$value[$i]=$rybssid;
+							$smarty->assign('value',$value);
+							$i++;
+							$res10->MoveNext();
+						}
+						$smarty->assign('values',array(0,1,2,3,4,5,6,7,8,9,10,11,12));
+						$smarty->assign('names',array('Month','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'));
+						$smarty->display('stu_attend_entry_everyday.tpl');
+				
+			}
+				
+				
+		        else
+			{
+				
+					$staffid=$_SESSION['username'];
+					
+					$sql10="select rybssid from staff_subjects where staffid='$staffid' order by rybssid";
+					$res10=$con->execute($sql10) or die($con->ErrorMsg());
+					$count=$res10->RecordCount();
+					$smarty->assign('count',$count);
+					$i=0;
+					while(!$res10->EOF)
+					{
+					        $rybssid=$res10->fields[0];
+						$length=strlen($rybssid);
+						//echo $rybssid."<br>";
+						if ($length == 8)
+						{
+							$rybsid=substr($rybssid,0,6);
+							$rid=substr($rybssid,0,2);
+							$bid=substr($rybssid,3,2);
+							$rybid=substr($rybssid,0,5);
+							$sid=substr($rybssid,5,1);
+							$no=substr($rybssid,6,2);
+							$y=substr($rybssid,2,1);
+						}
+						else
+						{
+							$rybsid=substr($rybssid,0,5);
+							$rid=substr($rybssid,0,1);
+							$bid=substr($rybssid,2,2);
+							$rybid=substr($rybssid,0,4);
+							$sid=substr($rybssid,4,1);
+							$no=substr($rybssid,5,2);
+							$y=substr($rybssid,1,1);
+						}
+						//echo $rybid. "hello".$no.'<BR>';
+						$sql="$"."sql".$i;
+						$res="$"."res".$i;
+						$sql="select shortcut from subject_att where rybid='$rybid' and no='$no'";
+						$res=$con->execute($sql) or die($con->ErrorMsg());
+						$subject[$i]=$res->fields[0];
+						//echo $subject[$i];
+						$smarty->assign('subject',$subject);
+						//echo $bid;
+						if($bid !='00' && $bid !='E0' && $rid !='13') 
+						{
+								if($y==1)
+								{
+									$year[$i]='First Year';
+								}
+								if($y==2)
+								{
+									$year[$i]='Two One';
+								}
+								if($y==3)
+								{
+									$year[$i]='Two Two';
+								}
+								if($y==4)
+								{
+									$year[$i]='Three One';
+								}
+								if($y==5)
+								{
+									$year[$i]='Three Two';
+								}
+								if($y==6)
+								{
+									$year[$i]='Four One';
+								}
+								if($y==7)
+								{
+									$year[$i]='Four Two';
+								}
+						}
+						if($bid !='00' && $bid !='E0' && $rid =='13') 
+						{
+								if($y==1)
+								{
+									$year[$i]='First Sem';
+								}
+								if($y==2)
+								{
+									$year[$i]='Second Sem';
+								}
+								if($y==3)
+								{
+									$year[$i]='Two One';
+								}
+								if($y==4)
+								{
+									$year[$i]='Two Two';
+								}
+								if($y==5)
+								{
+									$year[$i]='Three One';
+								}
+								if($y==6)
+								{
+									$year[$i]='Three Two';
+								}
+								if($y==7)
+								{
+									$year[$i]='Four One';
+								}
+								if($y==8)
+								{
+									$year[$i]='Four Two';
+								}
+						}
+						if($bid=='00')
+						{
+								if($y==1)
+								{
+									$year[$i]='One One';
+								}
+								if($y==2)
+								{
+									$year[$i]='One Two';
+								}
+								if($y==3)
+								{
+									$year[$i]='Two Three';
+								}
+								if($y==4)
+								{
+									$year[$i]='Two Four';
+								}
+								if($y==5)
+								{
+									$year[$i]='Three Five';
+								}
+								if($y==6)
+								{
+									$year[$i]='Three Six';
+								}
+								
+								
+						}
+						if($bid=='E0')
+						{
+								if($y==1)
+								{
+									$year[$i]='First Sem';
+								}
+								if($y==2)
+								{
+									$year[$i]='Second Sem';
+								}
+								if($y==3)
+								{
+									$year[$i]='Third Sem';
+								}
+								if($y==4)
+								{
+									$year[$i]='Fourth Sem';
+								}
+								if($y==5)
+								{
+									$year[$i]='Fifth Sem';
+								}
+								if($y==6)
+								{
+									$year[$i]='Sixth Sem';
+								}
+								
+								
+						}
+
+
+						$smarty->assign('year',$year);
+						$sec[$i]=$sid;
+						$sql="select bshort from branchmap where bid='$bid'";
+						$res=$con->execute($sql) or die($con->ErrorMsg());
+						$branch[$i]=$res->fields[0];
+						$smarty->assign('branch',$branch);
+						$smarty->assign('sec',$sec);
+						$value[$i]=$rybssid;
+						$smarty->assign('value',$value);
+						$i++;
+						$res10->MoveNext();
+					}
+						$smarty->assign('values',array(0,1,2,3,4,5,6,7,8,9,10,11,12));
+						$smarty->assign('names',array('Month','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'));
+						$smarty->display('stu_attend_entry_everyday.tpl');
+			}
+				
+				
+	//}
+	//else
+	//{
+		//$smarty->display('noentry.tpl');
+	//}
+	}
+		else
+		{
+			$smarty->display('staff_home.tpl');
+		}
+		  
+	}
+}
+?>

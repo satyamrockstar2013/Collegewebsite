@@ -1,0 +1,9 @@
+Recuperation of the college website
+----------------------------------------------------------------
+
+* Install xaamp or wamp. It's advisable to install the server, database and php  individually though.
+* Place the main pvpsit folder in the server root. The website will work out of box, no configuration is necessary.
+* The admin application is made on rails. Install rails on the system.
+* Make sure to install all the gem dependencies.
+* The above step will be taken care by rails executables. Just issue the bundle install command.
+* Open admin app folder in Command line and issue the command rake db:migrate to create databases.

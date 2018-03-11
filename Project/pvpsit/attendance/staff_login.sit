@@ -1,0 +1,207 @@
+<?php
+class staff_login
+{
+   function staff_login($params,$smarty)
+   {
+       
+		if(isset($_POST["submit"]))
+		{
+			$username=strtoupper($params["staffid"]);
+			//echo $username;
+			//$username =mysql_real_escape_string($username);
+			$password=md5($params["password"]);
+			include('db_connect.sit');
+			$sql="select loginid,password from login where loginid='".$username."' ";
+			$res=$con->execute($sql) or die($con->ErrorMsg());
+			//echo $res->fields[0];
+			$sub=substr($username,3,3);
+			if(!$res->EOF)
+			{
+				
+				if($res->fields[1]==$password)
+				{
+					
+				        if(substr($username,3,3)=='010')
+					{
+							session_register('username');
+							$depid=$username;
+						//depid
+							session_register('depid');
+							$_SESSION['depid']=$depid;
+							$_SESSION['username']=$username;
+							$smarty->assign('userid',$username);
+							//staffname
+							$sql="select name,designation,staffid from staff_master where staffid='$depid' ";
+							$staff=$con->execute($sql) or die($con->ErrorMsg());
+							$_SESSION['staffname']=$staff->fields[0];
+							$_SESSION['designation']=$staff->fields[1];
+							$_SESSION['staffid']=$staff->fields[2];
+							$smarty->assign('staffname',$staff->fields[0]);
+							$smarty->assign('designation',$staff->fields[1]);
+							$smarty->assign('staffid',$staff->fields[2]);
+							$smarty->display('staff_home.tpl');
+					}
+					else if( (substr($username,3,3)=='100') || ($username == 'TAP101002'))
+					{
+							$hodid=$username;
+							$depid=$username;
+							session_register('hodid');
+							$_SESSION['hodid']=$hodid;
+							$smarty->assign('hodid',$hodid);
+							session_register('depid');
+							$_SESSION['depid']=$depid;
+							//staffname
+							
+							$sql="select name,designation,staffid from staff_master where staffid='$hodid' ";
+							$staff=$con->execute($sql) or die($con->ErrorMsg());
+							$_SESSION['staffname']=$staff->fields[0];
+							$_SESSION['designation']=$staff->fields[1];
+							$_SESSION['staffid']=$staff->fields[2];
+							$smarty->assign('staffname',$staff->fields[0]);
+							$smarty->assign('designation',$staff->fields[1]);
+							$smarty->assign('staffid',$staff->fields[2]);
+							$smarty->display('hod_home.tpl');
+					}
+					else if(substr($username,3,3)=='001')
+					{
+							$depid=$username;
+						//depid
+							session_register('depid');
+							$_SESSION['depid']=$depid;
+							 
+						//depname
+							 $sql="select name from staff_master where staffid='$depid' ";
+							 $depname=$con->execute($sql) or die($con->ErrorMsg());
+							 $_SESSION['depname']=$depname->fields[0];
+							 
+						//bshort
+							$bshort=substr($depid,0,3);
+							$_SESSION['bshort']=$bshort;
+		   
+						//bid 
+							if($bshort != 'AUT')
+							{
+								$sql="select bid from branchmap where bshort='$bshort' ";
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$_SESSION['bid']=$res->fields[0];
+								$smarty->assign('bshort',$bshort);
+								$smarty->assign('depid',$depid);
+								$smarty->display('dep_home.tpl');
+							}
+							else if($bshort == 'AUT')
+							{
+								$sql="select bid from branchmap1 where bshort='$bshort' ";
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$_SESSION['bid']=$res->fields[0];
+								$smarty->assign('bshort',$bshort);
+								$smarty->assign('depid',$depid);
+								$smarty->display('depa_home.tpl');
+							}
+					}
+					
+					else if(substr($username,8,3)=='001')
+					{
+							
+							$depid=$username;
+							//depid
+							session_register('depid');
+							$_SESSION['depid']=$depid;
+							 
+						//depname
+							 $sql="select name from staff_master where staffid='$depid' ";
+							 $depname=$con->execute($sql) or die($con->ErrorMsg());
+							 $_SESSION['depname']=$depname->fields[0];
+							 
+						//bshort
+							$bshort=substr($depid,0,8);
+							
+							$_SESSION['bshort']=$bshort;
+							
+		   
+						//bid 
+							if($bshort != 'AUT')
+							{
+								$sql="select bid from branchmap where bshort='$bshort' ";
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$_SESSION['bid']=$res->fields[0];
+								$smarty->assign('bshort',$bshort);
+								$smarty->assign('depid',$depid);
+								$smarty->display('dep_home.tpl');
+							}
+							else if($bshort == 'AUT')
+							{
+								$sql="select bid from branchmap1 where bshort='$bshort' ";
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$_SESSION['bid']=$res->fields[0];
+								$smarty->assign('bshort',$bshort);
+								$smarty->assign('depid',$depid);
+								$smarty->display('depa_home.tpl');
+							}
+					}
+					
+					else if(substr($username,7,3)=='001')
+					{
+							
+							$depid=$username;
+							//depid
+							session_register('depid');
+							$_SESSION['depid']=$depid;
+							 
+						//depname
+							 $sql="select name from staff_master where staffid='$depid' ";
+							 $depname=$con->execute($sql) or die($con->ErrorMsg());
+							 $_SESSION['depname']=$depname->fields[0];
+							 
+						//bshort
+							$bshort=substr($depid,0,7);
+							
+							$_SESSION['bshort']=$bshort;
+							
+		   
+						//bid 
+							if($bshort != 'AUT')
+							{
+								$sql="select bid from branchmap where bshort='$bshort' ";
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$_SESSION['bid']=$res->fields[0];
+								$smarty->assign('bshort',$bshort);
+								$smarty->assign('depid',$depid);
+								$smarty->display('dep_home.tpl');
+							}
+							
+							
+							
+							else if($bshort == 'AUT')
+							{
+								$sql="select bid from branchmap1 where bshort='$bshort' ";
+								$res=$con->execute($sql) or die($con->ErrorMsg());
+								$_SESSION['bid']=$res->fields[0];
+								$smarty->assign('bshort',$bshort);
+								$smarty->assign('depid',$depid);
+								$smarty->display('depa_home.tpl');
+							}
+					}
+					
+					
+					
+					
+			}
+			else
+			{
+		                $smarty->assign('msg','Wrong Password');
+		                $smarty->display('staff_login.tpl');
+		         }
+	        }
+	        else
+	        {
+			$smarty->assign('msg','Invalid Userid');
+			$smarty->display('staff_login.tpl');
+	        }
+       }
+	   else
+	   {
+            $smarty->display('staff_login.tpl');
+       }
+   }//end of function
+}//end of class
+?>

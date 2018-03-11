@@ -1,0 +1,330 @@
+@charset "utf-8";
+
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: url(../img/pattern.png) repeat;
+}
+
+h1,h2,h3,h4,h5,h6 {
+}
+
+ul,li {
+  list-style-type: none;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+}
+
+#banner {
+  margin-bottom: 0px;
+}
+
+.container {
+  width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+#left_content {
+  float: left;
+  width: 245px;
+  margin-right: 5px;
+  color: #fff;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.content_title {
+  padding: 8px 0px;
+  color: #fff;
+  text-align: center;
+/*
+background: -moz-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(76,76,76,1)), color-stop(12%, rgba(89,89,89,1)), color-stop(25%, rgba(102,102,102,1)), color-stop(39%, rgba(71,71,71,1)), color-stop(50%, rgba(44,44,44,1)), color-stop(51%, rgba(0,0,0,1)), color-stop(60%, rgba(17,17,17,1)), color-stop(76%, rgba(43,43,43,1)), color-stop(91%, rgba(28,28,28,1)), color-stop(100%, rgba(19,19,19,1)));
+background: -webkit-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: -o-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: -ms-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+background: linear-gradient(to bottom, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313', GradientType=0 ); */;
+}
+
+.content {
+  background-color: #fff;
+  font-size: 12px;
+}
+
+#right_content {
+  float: right;
+  width: 740px;
+  margin-left: 5px;
+}
+
+#right_top {
+  width: 745px;
+  margin-bottom: 10px;
+}
+
+#right_middle {
+  margin-top: 10px;
+}
+
+#right_bottom {
+  width: 745px;
+  margin-top: 15px;
+}
+
+#vision_and_mission {
+  width: 745px;
+  height: 180px;
+  margin-bottom: 25px;
+}
+
+#vision {
+  width: 360px;
+  height: 240px;
+  float: left;
+  background-color: white;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 15px;
+  border: 1px #999 solid;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: rgba(255,255,255,1);
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(79%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+}
+
+#vision_mission_title {
+  font-size: 20px;
+  text-align: center;
+}
+
+#mission {
+  border: 2px solid #fff;
+  width: 380px;
+  height: 240px;
+  float: right;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px #999 solid;
+  background-color: white;
+  border-radius: 15px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  text-align: justify;
+  overflow: hidden;
+  background: rgba(255,255,255,1);
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(79%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 79%, rgba(237,237,237,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+}
+
+#slider_and_flash {
+  width: 500px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+#flash {
+  height: 60px;
+  width: 500px;
+  float: left;
+  margin: 0px 0px 10px 0px;
+  border: 1px black solid;
+  text-align: justify;
+  font-weight: 200;
+  color: blue;
+  overflow: hidden;
+}
+
+#flash_heading {
+  width: 150px;
+  padding: 9px;
+  text-align: center;
+  font-weight: 700;
+  background: rgb(85, 47, 132);
+  color: white;
+  float: left;
+}
+
+#placments {
+  width: 345px;
+  float: right;
+  text-align: justify;
+  font-size: 14px;
+  padding-top: 6px;
+  padding-left: 10px;
+  font-style: bold;
+  color: rgb(10, 27, 27);
+}
+
+#placements_holder {
+  overflow: hidden;
+}
+
+#slider {
+  height: 240px;
+  width: 500px;
+  margin-right: 5px;
+  float: left;
+}
+
+#slider img {
+  width: 500px;
+  height: 240px;
+}
+
+#latest_news {
+  float: right;
+  height: 306px;
+  overflow: hidden;
+  width: 230px;
+  margin-left: 5px;
+  text-align: justify;
+  text-decoration: none;
+}
+
+#right_bottom {
+}
+
+#events {
+  width: 365px;
+  height: 320px;
+  float: left;
+  padding-bottom: 25px;
+  overflow: hidden;
+}
+
+#examination_notice_board {
+  float: right;
+  width: 365px;
+  padding-bottom: 25px;
+  overflow: hidden;
+  height: 320px;
+}
+
+footer {
+  padding: 5px;
+  background: #333;
+  font-weight: 300;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 20px;
+  display: block;
+  color: white;
+}
+/*Links in the left and right sidebars*/
+.list_of_links {
+  background-color:;
+  text-align: left;
+  padding: 0px;
+  margin: 0 auto;
+  font-size: 13px;
+  list-style-type: none;
+}
+
+.list_of_links li {
+  font-weight: bold;
+  padding: 8px 0px 8px 20px;
+  border-bottom: 1px  black dotted;
+  display: block;
+  cursor: pointer;
+  border-left-width: 5px;
+  border-color: black;
+  padding-bottom: 13px;
+}
+
+.list_of_links a {
+  text-decoration: none;
+  color: #000;
+}
+
+.list_of_links a:hover {
+  color: #09f;
+}
+
+.list_of_links li:hover {
+}
+
+.custom_bold {
+  font-weight: 700;
+}
+
+/*Department styles*/
+#department_title {
+  text-align: center;
+  font: Roboto 700;
+}
+
+/*Tabs*/
+
+ul#tabs {
+  list-style-type: none;
+  margin: 30px 0 0 0;
+  padding: 0 0 0.3em 0;
+}
+
+ul#tabs li {
+  display: inline;
+}
+
+ul#tabs li a {
+  color: #42454a;
+  background-color: #dedbde;
+  border-bottom: none;
+  padding: 5px;
+  text-decoration: none;
+  border-radius: 4px 4px 0px 0px;
+}
+
+ul#tabs li a:hover {
+  background-color: #f1f0ee;
+}
+
+ul#tabs li a.selected {
+  color: #fff;
+  background-color: #2388BF;
+}
+
+div.tabContent {
+  text-align: justify;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 1px solid #c9c3ba;
+  padding: 0.5em;
+  font-size: 12px;
+  background-color: #f1f0ee;
+  min-height: 300px;
+}
+
+div.tabContent.hide {
+  display: none;
+}
