@@ -1,0 +1,3 @@
+## A Project on RECUPERATION OF PVPSIT COLLEGE WEBSITE
+
+A website is the face of any reputed organization. However just having one isn't enough. A website should be pleasing to the eye and also efficient. Also, it should be up-to-date with latest trends and design factors. By the old standards, PVPSIT website is one of the best available design in both architecture and lay outs. Things have changed and PVPSIT website fell out of synchronization with the modern web designing and developing standards. It is imperative that it should be redesigned and well documented with a future perspective.  This project employs a simple and consistent design in the renovation of the PVPSIT college website.
